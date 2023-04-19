@@ -1,20 +1,16 @@
-from aiogram import Bot, types
+from aiogram import types
 from aiogram.utils import executor
-from aiogram.dispatcher import Dispatcher
-
-import os
+from create_bot import dp
 
 
-bot = (Bot(token=os.getenv('TOKEN')))
-dp = Dispatcher(bot)
+import FSM
 
 
 async def on_start(_):
     print("Bot is working...")
 
-@dp.message_handler(commands=['weather'])
-async def startCommand(msg: types.Message):
-    await msg.answer('Im working...')
+
+FSM.register_handlers(dp)
 
 
 executor.start_polling(dp, skip_updates=True, on_startup=on_start)
